@@ -42,12 +42,11 @@ public class AuthService {
     }
 
     private String generateToken(User user) {
-        long jwtExpirationMs = 3600000L; // 1 hour
         return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("userId", user.getId())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
     }
